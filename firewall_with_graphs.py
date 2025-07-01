@@ -6,10 +6,11 @@ from ryu.ofproto import ofproto_v1_3
 from ryu.lib.packet import packet
 from ryu.lib.packet import ethernet, ipv4
 import matplotlib.pyplot as plt
+import numpy as np
 
 #Dados virtuais para referencia
-tempos_resposta = [0.5, 0.7, 0.4, 0.6, 0.8, 0.9, 0.3, 0.4]  # em milissegundos
-pacotes_bloqueados = [1, 3, 5, 6, 8, 9, 10, 12]
+tempos_resposta = [Tempo, 0.5, 0.7, 0.4, 0.6, 0.8, 0.9, 0.3, 0.4]  # em milissegundos
+pacotes_bloqueados = [Pacotes Bloqueados, 1, 3, 5, 6, 8, 9, 10, 12]
 
 class SimpleFirewall(app_manager.RyuApp):
     OFP_VERSION = [ofproto_v1_3.OFP_VERSION]
@@ -59,5 +60,6 @@ axs[1].set_title('Tempo de Resposta (ms)')
 axs[1].set_xlabel('Instante de Coleta')
 axs[1].set_ylabel('Tempo (ms)')
 
+np.savetxt('scores.csv', [p for p in zip(pacotes_bloqueados, tempos_resposta)], delimiter=',', fmt='%s')
 plt.tight_layout()
 plt.show()
