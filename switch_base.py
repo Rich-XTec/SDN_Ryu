@@ -43,7 +43,7 @@ class SimpleSwitch(app_manager.RyuApp):
         datapath = msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
-        in_port = '8022'
+        in_port = msg.match['in_port']
 
         pkt = packet.Packet(msg.data)
         eth = pkt.get_protocol(ethernet.ethernet)
@@ -71,7 +71,7 @@ class SimpleSwitch(app_manager.RyuApp):
         # Envia o pacote de volta
         out = parser.OFPPacketOut(datapath=datapath,
                                   buffer_id=ofproto.OFP_NO_BUFFER,
-                                  in_port=in_port,
+                                  match=msg.match,
                                   actions=actions,
                                   data=msg.data)
         datapath.send_msg(out)
